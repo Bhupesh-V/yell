@@ -2,6 +2,7 @@ package ui
 
 import (
 	"yell/internal/ui/components"
+	"yell/internal/ui/themes"
 	"yell/internal/ui/utils"
 
 	"fyne.io/fyne/v2"
@@ -12,12 +13,13 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Build(title, message, icon *string) {
+func Build(title, message, icon, appTheme *string) {
 	myApp := app.NewWithID("yell.app")
 
 	fyne.Do(func() {})
 
-	myApp.Settings().SetTheme(&components.ToastTheme{})
+	ytheme := themes.GetTheme(themes.ParseTheme(*appTheme))
+	myApp.Settings().SetTheme(ytheme)
 
 	var myWindow fyne.Window
 	if drv, ok := myApp.Driver().(desktop.Driver); ok {
@@ -30,19 +32,27 @@ func Build(title, message, icon *string) {
 	emojiObject := utils.GetEmbeddedEmojiImage(*icon, 42)
 	iconContainer := container.NewCenter(emojiObject)
 
-	// Selectable Title (20pt Bold via RichText Heading) & Message
+	// Elements specify semantic ColorNames instead of explicit RGB colors
 	titleLabel := widget.NewRichText(
 		&widget.TextSegment{
 			Text: *title,
 			Style: widget.RichTextStyle{
 				TextStyle: fyne.TextStyle{Bold: true},
 				SizeName:  theme.SizeNameHeadingText,
+				ColorName: theme.ColorNameForeground,
 			},
 		},
 	)
 
-	messageLabel := widget.NewLabel(*message)
-	messageLabel.Selectable = true
+	messageLabel := widget.NewRichText(
+		&widget.TextSegment{
+			Text: *message,
+			Style: widget.RichTextStyle{
+				ColorName: themes.ColorNameSubtleText,
+			},
+		},
+	)
+	// messageLabel.Selectable = true
 
 	// Group text with tight 2px vertical spacing
 	textGroup := container.New(&utils.TightVBoxLayout{Spacing: 2},

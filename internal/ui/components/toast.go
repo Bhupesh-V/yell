@@ -2,13 +2,11 @@ package components
 
 import (
 	"image/color"
-	"yell/internal/assets"
+	"yell/internal/ui/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
 )
-
-var interFontResource = fyne.NewStaticResource("font.ttf", assets.FontBytes)
 
 type ToastTheme struct{}
 
@@ -26,8 +24,8 @@ func (t ToastTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) c
 
 // Serves Inter custom font across all operating systems
 func (t ToastTheme) Font(style fyne.TextStyle) fyne.Resource {
-	if interFontResource != nil && len(interFontResource.StaticContent) > 0 {
-		return interFontResource
+	if utils.InterFont != nil && len(utils.InterFont.StaticContent) > 0 {
+		return utils.InterFont
 	}
 	return theme.DefaultTheme().Font(style)
 }

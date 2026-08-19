@@ -9,6 +9,8 @@ import (
 	"fyne.io/fyne/v2/canvas"
 )
 
+var InterFont = fyne.NewStaticResource("font.ttf", assets.FontBytes)
+
 func Spacer(w, h float32) fyne.CanvasObject {
 	rect := canvas.NewRectangle(color.Transparent)
 	rect.SetMinSize(fyne.NewSize(w, h))
@@ -33,6 +35,21 @@ func GetEmbeddedEmojiImage(emoji string, targetSize float32) fyne.CanvasObject {
 	fallbackText.TextSize = targetSize
 	return fallbackText
 }
+
+// Helper function to map string to Fyne's ThemeVariant
+// func ParseThemeMode(modeStr string) fyne.ThemeVariant {
+// 	switch strings.ToLower(strings.TrimSpace(modeStr)) {
+// 	case "light":
+// 		return theme.VariantLight
+// 	case "dark":
+// 		return theme.VariantDark
+// 	case "cyberpunk":
+// 		return components.CyberpunkTheme
+// 	default:
+// 		// Default mode
+// 		return theme.VariantDark
+// 	}
+// }
 
 // Custom VBox for exact pixel spacing between items
 type TightVBoxLayout struct {

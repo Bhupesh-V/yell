@@ -2,10 +2,12 @@ package components
 
 import (
 	"image/color"
+	"yell/internal/ui/themes"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -45,8 +47,11 @@ func (b *circularCloseButton) Tapped(*fyne.PointEvent) {
 }
 
 func (b *circularCloseButton) CreateRenderer() fyne.WidgetRenderer {
+	th := theme.Current()
+	variant := fyne.CurrentApp().Settings().ThemeVariant()
+
 	b.circle = canvas.NewCircle(color.Transparent)
-	b.text = canvas.NewText("✕", color.NRGBA{R: 180, G: 180, B: 180, A: 255})
+	b.text = canvas.NewText("✕", th.Color(themes.ColorNameSubtleText, variant))
 	b.text.TextSize = 12
 	b.text.Alignment = fyne.TextAlignCenter
 
@@ -91,13 +96,17 @@ func (r *circularCloseButtonRenderer) Objects() []fyne.CanvasObject {
 	return r.objects
 }
 
+// Refresh fetches colors directly from the registered global theme
 func (r *circularCloseButtonRenderer) Refresh() {
+	th := theme.Current()
+	variant := fyne.CurrentApp().Settings().ThemeVariant()
+
 	if r.btn.hovered {
-		r.btn.circle.FillColor = color.NRGBA{R: 255, G: 255, B: 255, A: 35}
-		r.btn.text.Color = color.White
+		r.btn.circle.FillColor = th.Color(themes.ColorNameHoverCircle, variant)
+		r.btn.text.Color = th.Color(theme.ColorNameForeground, variant)
 	} else {
 		r.btn.circle.FillColor = color.Transparent
-		r.btn.text.Color = color.NRGBA{R: 180, G: 180, B: 180, A: 255}
+		r.btn.text.Color = th.Color(themes.ColorNameSubtleText, variant)
 	}
 	r.btn.circle.Refresh()
 	r.btn.text.Refresh()

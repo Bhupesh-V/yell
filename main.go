@@ -27,6 +27,7 @@ func main() {
 	title := flag.String("title", "Somebody yelling", "Title of the alert popup")
 	message := flag.String("message", defaultMsg, "Message text to display")
 	icon := flag.String("icon", "🗣️", "Icon or emoji on the left")
+	ftheme := flag.String("theme", "dark", "Theme mode: light or dark")
 	flag.Parse()
 
 	if piped := readPipedInput(); piped != "" {
@@ -35,5 +36,5 @@ func main() {
 		}
 	}
 
-	ui.Build(title, message, icon)
+	ui.Build(title, message, icon, ftheme)
 }
