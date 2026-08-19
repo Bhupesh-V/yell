@@ -34,3 +34,18 @@ echo "$(lifespan yyyy-mm-dd) remaining" | yell --title="Break lele bhai" --icon=
 ```
 
 > <img width="498" height="148" alt="Screenshot 2026-08-19 at 6 51 07 PM" src="https://github.com/user-attachments/assets/f56544b4-d592-40fd-8048-a4925b6f09a2" />
+
+Find your theme from `yell list themes`
+
+```sh
+yell --title="Lunch Time" --message="Time to eat boi" --icon="🥗" --theme=warm
+```
+
+> <img width="391" height="148" alt="Screenshot 2026-08-19 at 11 52 29 PM" src="https://github.com/user-attachments/assets/40fe0eb9-bb33-4442-a21c-a416a83acbf8" />
+
+Play a background sound, find yours via `yell list sounds`
+
+```sh
+yell --title="Lunch Time" --message="Time to eat boi" --icon="🥗" --theme=warm --sound=chime
+```
+
