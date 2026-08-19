@@ -10,7 +10,7 @@ setup:
 
 # Run the app locally in development mode
 run:
-	go run main.go --title="Woooah!" --message="you there bro?" --icon="👀"
+	go run main.go --title="Woooah! Love Alert" --message="you love me bro?" --icon="❤️‍🔥"
 
 # Run the app locally with custom CLI flags
 run-args TITLE="Break Time" MSG="Go to bed right now" ICON="🫩":

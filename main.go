@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"strings"
-	"yell/internal/ui"
+	"yell/internal/ui/components"
 	"yell/internal/ui/utils"
 
 	"fyne.io/fyne/v2"
@@ -47,7 +47,7 @@ func main() {
 
 	fyne.Do(func() {})
 
-	myApp.Settings().SetTheme(&ui.ToastTheme{})
+	myApp.Settings().SetTheme(&components.ToastTheme{})
 
 	var myWindow fyne.Window
 	if drv, ok := myApp.Driver().(desktop.Driver); ok {
@@ -57,7 +57,7 @@ func main() {
 	}
 
 	// Emoji Icon
-	emojiObject := ui.GetEmbeddedEmojiImage(*icon, 42)
+	emojiObject := utils.GetEmbeddedEmojiImage(*icon, 42)
 	iconContainer := container.NewCenter(emojiObject)
 
 	// Selectable Title (20pt Bold via RichText Heading) & Message
@@ -75,13 +75,13 @@ func main() {
 	messageLabel.Selectable = true
 
 	// Group text with tight 2px vertical spacing
-	textGroup := container.New(&ui.TightVBoxLayout{Spacing: 2},
+	textGroup := container.New(&utils.TightVBoxLayout{Spacing: 2},
 		titleLabel,
 		messageLabel,
 	)
 
 	// Close Button with Circular Hover
-	closeBtn := ui.NewCircularCloseButton(func() {
+	closeBtn := components.NewCircularCloseButton(func() {
 		myApp.Quit()
 	})
 
