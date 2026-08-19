@@ -1,11 +1,11 @@
 # yell
 
 > [!IMPORTANT]
-> `afk` is experimental and has only been tested on a modern MacOS & Windows system. Please report issues.
+> `yell` is experimental and has only been tested on a modern MacOS & Windows system. Please report issues.
 
 ## Why?
 
-- Notificiation center for each OS is limiting.
+- More control over alert customization. Notificiation center for each OS is limiting.
 
 ## Why not?
 
