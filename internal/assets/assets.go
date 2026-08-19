@@ -3,17 +3,19 @@ package assets
 import (
 	"embed"
 	"fmt"
+	"io/fs"
 	"path"
 	"strings"
 )
-
-// Embed assets/ including emojis and font.ttf
 
 //go:embed emojis/*
 var Emojis embed.FS
 
 //go:embed font/*
 var Font embed.FS
+
+//go:embed sound/*
+var Sounds embed.FS
 
 // Load Inter font from assets/font.ttf
 var FontBytes, _ = Font.ReadFile("font.ttf")
@@ -41,4 +43,9 @@ func GetEmojiFilePath(emoji string) string {
 	}
 
 	return ""
+}
+
+// OpenAudio opens and returns the embedded audio file
+func OpenAudio(sound string) (fs.File, error) {
+	return Sounds.Open(path.Join("sound", sound+".wav"))
 }
