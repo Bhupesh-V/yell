@@ -10,7 +10,7 @@ setup:
 
 # Run the app locally in development mode
 run:
-	go run main.go --title="Woooah! Love Alert" --message="you love me bro?" --icon="❤️‍🔥"
+	go run main.go --title="Woooah! Love Alert" --message="you love me bro?" --icon="❤️‍🔥" --sound=happy
 
 # Run the app locally with custom CLI flags
 run-args TITLE="Break Time" MSG="Go to bed right now" ICON="🫩":
@@ -29,7 +29,7 @@ build-windows:
 # Cross-compile for Linux (AMD64) using fyne-cross
 build-linux:
 	@echo "==> Cross-compiling for Linux via fyne-cross"
-	fyne-cross linux -arch=amd64,arm64
+	fyne-cross linux -arch=amd64,arm64 -tags oto_purego,ebitengine_purego
 
 # Cross-compile for macOS (Darwin AMD64 & ARM64) using fyne-cross
 build-darwin:

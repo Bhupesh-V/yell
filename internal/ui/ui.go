@@ -14,11 +14,10 @@ import (
 )
 
 func Build(title, message, icon, appTheme *string) {
-	// Initialise the application on the entry thread
 	myApp := app.NewWithID("yell.app")
 
-	// Schedule all UI building and window actions on the main thread via fyne.Do
-	go fyne.Do(func() {
+	// SetOnStarted runs inside the active Fyne event loop once myApp.Run() starts
+	myApp.Lifecycle().SetOnStarted(func() {
 		ytheme := themes.GetTheme(themes.ParseTheme(*appTheme))
 		myApp.Settings().SetTheme(ytheme)
 
@@ -33,7 +32,6 @@ func Build(title, message, icon, appTheme *string) {
 		emojiObject := utils.GetEmbeddedEmojiImage(*icon, 42)
 		iconContainer := container.NewCenter(emojiObject)
 
-		// Elements specify semantic ColorNames instead of explicit RGB colors
 		titleLabel := widget.NewRichText(
 			&widget.TextSegment{
 				Text: *title,
@@ -54,18 +52,15 @@ func Build(title, message, icon, appTheme *string) {
 			},
 		)
 
-		// Group text with tight 2px vertical spacing
 		textGroup := container.New(&utils.TightVBoxLayout{Spacing: 2},
 			titleLabel,
 			messageLabel,
 		)
 
-		// Close Button with Circular Hover
 		closeBtn := components.NewCircularCloseButton(func() {
-			myApp.Quit() // Standard Fyne callback: safe to call directly here
+			myApp.Quit()
 		})
 
-		// Layout
 		leftSide := container.NewHBox(
 			iconContainer,
 			utils.Spacer(12, 0),
@@ -91,9 +86,9 @@ func Build(title, message, icon, appTheme *string) {
 
 		myWindow.SetContent(paddedContainer)
 		myWindow.CenterOnScreen()
-		myWindow.Show() // Use Show() instead of ShowAndRun() when inside fyne.Do
+		myWindow.Show()
 	})
 
-	// Block and run the driver lifecycle loop on the main execution thread
+	// Starts the driver event loop on the main thread
 	myApp.Run()
 }
