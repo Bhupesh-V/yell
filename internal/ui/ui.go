@@ -45,14 +45,7 @@ func Build(title, message, icon, appTheme *string) {
 			},
 		)
 
-		messageLabel := widget.NewRichText(
-			&widget.TextSegment{
-				Text: *message,
-				Style: widget.RichTextStyle{
-					ColorName: themes.ColorNameSubtleText,
-				},
-			},
-		)
+		messageLabel := components.NewSelectableMarkdown(*message)
 
 		// Group text with tight 2px vertical spacing
 		textGroup := container.New(&utils.TightVBoxLayout{Spacing: 2},

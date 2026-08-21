@@ -7,6 +7,8 @@ default: build-local
 setup:
 	@echo "==> Installing fyne-cross"
 	go install github.com/fyne-io/fyne-cross@latest
+	@echo "==> Installing fyne-cli"
+	go install fyne.io/fyne/v2/cmd/fyne@latest
 
 # Run the app locally in development mode
 run:

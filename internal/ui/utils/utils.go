@@ -59,10 +59,14 @@ type TightVBoxLayout struct {
 func (t *TightVBoxLayout) Layout(objects []fyne.CanvasObject, size fyne.Size) {
 	y := float32(0)
 	for _, child := range objects {
-		childSize := child.MinSize()
-		child.Resize(childSize)
+		if !child.Visible() {
+			continue
+		}
+		childMin := child.MinSize()
+		// Stretch width to size.Width so wrapping RichText has space to render
+		child.Resize(fyne.NewSize(size.Width, childMin.Height))
 		child.Move(fyne.NewPos(0, y))
-		y += childSize.Height + t.Spacing
+		y += childMin.Height + t.Spacing
 	}
 }
 
