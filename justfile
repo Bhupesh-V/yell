@@ -1,5 +1,7 @@
 # Justfile for yell (Fyne Toast Notification App)
 
+os_type := os()
+
 # Default recipe when running 'just'
 default: build-local
 
@@ -47,24 +49,58 @@ docker-build:
 run-windows-ps MSG="Take a break!":
 	powershell -Command ".\fyne-cross\bin\windows-amd64\yell.exe -message '{{MSG}}'"
 
-# Install the binary locally into /usr/local/bin (macOS/Darwin)
-install: build-local
-	@echo "==> Installing yell to /usr/local/bin..."
-	@if [ -w /usr/local/bin ]; then \
-		cp yell /usr/local/bin/yell; \
+install:
+	@if [ "{{os_type}}" = "macos" ]; then \
+		just install-macos; \
+	elif [ "{{os_type}}" = "linux" ]; then \
+		just install-linux; \
 	else \
-		sudo cp yell /usr/local/bin/yell; \
+		echo "Unsupported host OS for installation: {{os_type}}"; \
+		exit 1; \
 	fi
-	@echo "==> Successfully installed! You can now run 'yell' from anywhere."
 
-# Uninstall the binary from /usr/local/bin
-uninstall:
-	@echo "==> Removing yell from /usr/local/bin..."
-	@if [ -w /usr/local/bin/yell ]; then \
-		rm -f /usr/local/bin/yell; \
+# Internal recipe: macOS symlink deployment
+install-macos: build-darwin
+	@echo "==> Deploying yell.app from fyne-cross build..."
+	@if [ -w /Applications ]; then \
+		rm -rf /Applications/yell.app; \
+		cp -R fyne-cross/dist/darwin-arm64/yell.app /Applications/; \
 	else \
-		sudo rm -f /usr/local/bin/yell; \
+		sudo rm -rf /Applications/yell.app; \
+		sudo cp -R fyne-cross/dist/darwin-arm64/yell.app /Applications/; \
 	fi
+	@echo "==> Creating symlink to /usr/local/bin/yell..."
+	@if [ -w /usr/local/bin ]; then \
+		ln -sf "/Applications/yell.app/Contents/MacOS/yell" /usr/local/bin/yell; \
+	else \
+		sudo ln -sf "/Applications/yell.app/Contents/MacOS/yell" /usr/local/bin/yell; \
+	fi
+	@echo "==> Successfully installed macOS app bundle and symlink!"
+
+# Internal recipe: Linux binary deployment
+install-linux: build-linux
+	@echo "==> Deploying Linux binary to /usr/local/bin..."
+	@if [ -w /usr/local/bin ]; then \
+		cp fyne-cross/dist/linux-amd64/yell /usr/local/bin/yell; \
+	else \
+		sudo cp fyne-cross/dist/linux-amd64/yell /usr/local/bin/yell; \
+	fi
+	@echo "==> Successfully installed Linux binary!"
+
+# OS-Specific Uninstallation
+uninstall:
+	@if [ "{{os_type}}" = "macos" ]; then \
+		echo "==> Removing macOS yell.app and symlink..."; \
+		if [ -w /Applications/yell.app ]; then rm -rf /Applications/yell.app; else sudo rm -rf /Applications/yell.app; fi; \
+		if [ -w /usr/local/bin/yell ]; then rm -f /usr/local/bin/yell; else sudo rm -f /usr/local/bin/yell; fi; \
+	elif [ "{{os_type}}" = "linux" ]; then \
+		echo "==> Removing Linux yell binary..."; \
+		if [ -w /usr/local/bin/yell ]; then rm -f /usr/local/bin/yell; else sudo rm -f /usr/local/bin/yell; fi; \
+	else \
+		echo "Unsupported host OS for uninstallation: {{os_type}}"; \
+		exit 1; \
+	fi
+	@echo "==> Successfully uninstalled."
 
 # Clean up built binaries and generated fyne-cross artifacts
 clean:
