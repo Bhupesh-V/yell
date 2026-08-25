@@ -43,6 +43,15 @@ yell --title="Lunch Time" --message="Time to eat boi" --icon="🥗" --theme=warm
 
 > <img width="391" height="148" alt="Screenshot 2026-08-19 at 11 52 29 PM" src="https://github.com/user-attachments/assets/40fe0eb9-bb33-4442-a21c-a416a83acbf8" />
 
+Markdown Support on `message`
+
+```sh
+yell --title="Deploy Complete" --message=$'**Build #142** finished in `2m 34s`\n\n- ✅ Tests passed\n- ✅ Lint clean\n- ⚠️ *1 warning* in `auth.go`\n\nRun `git log -1` for details.' --icon="🚀" --sound=bubble
+```
+
+> <img width="456" height="229" alt="Screenshot 2026-08-26 at 12 53 44 AM" src="https://github.com/user-attachments/assets/4837e556-e10c-4229-aaf2-8a26535ebd2b" />
+
+
 Play a background sound, find yours via `yell list sounds`
 
 ```sh
