@@ -49,3 +49,20 @@ func GetEmojiFilePath(emoji string) string {
 func OpenAudio(sound string) (fs.File, error) {
 	return Sounds.Open(path.Join("sound", sound+".wav"))
 }
+
+// GetSoundNames reads the embedded sound directory and returns a slice of sound names (without the .wav extension)
+func GetSoundNames() ([]string, error) {
+	entries, err := Sounds.ReadDir("sound")
+	if err != nil {
+		return nil, err
+	}
+
+	var names []string
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".wav") {
+			names = append(names, strings.TrimSuffix(entry.Name(), ".wav"))
+		}
+	}
+
+	return names, nil
+}

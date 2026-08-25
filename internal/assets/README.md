@@ -11,3 +11,8 @@ yell imports & embeds following external assets
 
 - Located in `font/`
 - Source: https://fonts.google.com/specimen/Inter
+
+## Sounds
+
+- Located in `sounds/`
+- Source: https://mixkit.co/free-sound-effects/

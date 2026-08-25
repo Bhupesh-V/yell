@@ -115,7 +115,14 @@ func main() {
 		Use:   "sounds",
 		Short: "List all available alert sounds",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Available sounds:\n- happy\n- chime\n- bells-echo\n- bubble")
+			fmt.Printf("Available sounds:\n\n")
+			sounds, err := assets.GetSoundNames()
+			if err != nil {
+				panic(err)
+			}
+			for _, sound := range sounds {
+				fmt.Printf("- %s\n", sound)
+			}
 		},
 	}
 
