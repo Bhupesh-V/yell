@@ -19,6 +19,11 @@ func NewSelectableMarkdown(content string) *SelectableRichText {
 	rt := &SelectableRichText{}
 	rt.Segments = base.Segments
 	rt.Wrapping = fyne.TextWrapWord
+	// fyne.ScrollDirection's zero value is ScrollBoth (it's the first iota),
+	// so building via a bare struct literal instead of widget.NewRichText()
+	// leaves this widget scrollable by default, which confines it to a tiny
+	// viewport instead of wrapping/growing - must set explicitly.
+	rt.Scroll = fyne.ScrollNone
 	rt.ExtendBaseWidget(rt)
 
 	// Apply subtle text color to text segments while preserving monospace flags
