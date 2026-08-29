@@ -8,59 +8,125 @@ import (
 	"fyne.io/fyne/v2/theme"
 )
 
-// Custom semantic color tokens
 const (
 	ColorNameSubtleText  fyne.ThemeColorName = "yell:color:subtleText"
 	ColorNameHoverCircle fyne.ThemeColorName = "yell:color:hoverCircle"
 )
 
-// ThemeType represents your own custom theme identifiers
 type ThemeType string
 
-const (
-	ThemeDark           ThemeType = "dark"
-	ThemeLight          ThemeType = "light"
-	ThemeCyberpunk      ThemeType = "cyberpunk"
-	ThemeSolarizedDark  ThemeType = "solarized-dark"
-	ThemeSolarizedLight ThemeType = "solarized-light"
-	ThemeWarm           ThemeType = "warm"
-)
-
-func ParseTheme(input string) ThemeType {
-	switch input {
-	case "light":
-		return ThemeLight
-	case "cyberpunk":
-		return ThemeCyberpunk
-	case "solarized-dark":
-		return ThemeSolarizedDark
-	case "solarized-light":
-		return ThemeSolarizedLight
-	case "warm":
-		return ThemeWarm
-	default:
-		return ThemeDark
-	}
+// Centralized theme palette registry map
+var themeRegistry = map[ThemeType]Palette{
+	"dark": {
+		Background:  color.NRGBA{R: 24, G: 24, B: 36, A: 255},
+		Foreground:  color.NRGBA{R: 255, G: 255, B: 255, A: 255},
+		SubtleText:  color.NRGBA{R: 180, G: 180, B: 180, A: 255},
+		HoverCircle: color.NRGBA{R: 255, G: 255, B: 255, A: 35},
+		Variant:     theme.VariantDark,
+	},
+	"light": {
+		Background:  color.NRGBA{R: 245, G: 245, B: 250, A: 255},
+		Foreground:  color.NRGBA{R: 20, G: 20, B: 30, A: 255},
+		SubtleText:  color.NRGBA{R: 100, G: 100, B: 115, A: 255},
+		HoverCircle: color.NRGBA{R: 0, G: 0, B: 0, A: 25},
+		Variant:     theme.VariantLight,
+	},
+	"warm": {
+		Background:  color.NRGBA{R: 222, G: 198, B: 149, A: 255},
+		Foreground:  color.NRGBA{R: 42, G: 31, B: 26, A: 255},
+		SubtleText:  color.NRGBA{R: 105, G: 82, B: 71, A: 255},
+		HoverCircle: color.NRGBA{R: 42, G: 31, B: 26, A: 35},
+		Variant:     theme.VariantLight,
+	},
+	"nord": {
+		Background:  color.NRGBA{R: 46, G: 52, B: 64, A: 255},
+		Foreground:  color.NRGBA{R: 236, G: 239, B: 244, A: 255},
+		SubtleText:  color.NRGBA{R: 143, G: 188, B: 187, A: 255},
+		HoverCircle: color.NRGBA{R: 216, G: 222, B: 233, A: 35},
+		Variant:     theme.VariantDark,
+	},
+	"forest": {
+		Background:  color.NRGBA{R: 28, G: 38, B: 30, A: 255},
+		Foreground:  color.NRGBA{R: 218, G: 228, B: 212, A: 255},
+		SubtleText:  color.NRGBA{R: 138, G: 160, B: 132, A: 255},
+		HoverCircle: color.NRGBA{R: 163, G: 190, B: 140, A: 30},
+		Variant:     theme.VariantDark,
+	},
+	"cyberpunk": {
+		Background:  color.NRGBA{R: 9, G: 2, B: 33, A: 255},
+		Foreground:  color.NRGBA{R: 0, G: 255, B: 204, A: 255},
+		SubtleText:  color.NRGBA{R: 255, G: 105, B: 180, A: 255},
+		HoverCircle: color.NRGBA{R: 0, G: 255, B: 204, A: 40},
+		Variant:     theme.VariantDark,
+	},
+	"solarized-dark": {
+		Background:  color.NRGBA{R: 0, G: 43, B: 54, A: 255},
+		Foreground:  color.NRGBA{R: 131, G: 148, B: 150, A: 255},
+		SubtleText:  color.NRGBA{R: 101, G: 123, B: 131, A: 255},
+		HoverCircle: color.NRGBA{R: 7, G: 54, B: 66, A: 180},
+		Variant:     theme.VariantDark,
+	},
+	"solarized-light": {
+		Background:  color.NRGBA{R: 253, G: 246, B: 227, A: 255},
+		Foreground:  color.NRGBA{R: 88, G: 110, B: 117, A: 255},
+		SubtleText:  color.NRGBA{R: 147, G: 161, B: 161, A: 255},
+		HoverCircle: color.NRGBA{R: 238, G: 232, B: 213, A: 180},
+		Variant:     theme.VariantLight,
+	},
+	"dracula": {
+		Background:  color.NRGBA{R: 40, G: 42, B: 54, A: 255},
+		Foreground:  color.NRGBA{R: 248, G: 248, B: 242, A: 255},
+		SubtleText:  color.NRGBA{R: 189, G: 147, B: 249, A: 255},
+		HoverCircle: color.NRGBA{R: 255, G: 121, B: 198, A: 40},
+		Variant:     theme.VariantDark,
+	},
+	"catppuccin": {
+		Background:  color.NRGBA{R: 30, G: 30, B: 46, A: 255},
+		Foreground:  color.NRGBA{R: 205, G: 214, B: 244, A: 255},
+		SubtleText:  color.NRGBA{R: 147, G: 153, B: 178, A: 255},
+		HoverCircle: color.NRGBA{R: 137, G: 180, B: 250, A: 40},
+		Variant:     theme.VariantDark,
+	},
+	"tokyo-night": {
+		Background:  color.NRGBA{R: 26, G: 27, B: 38, A: 255},
+		Foreground:  color.NRGBA{R: 192, G: 202, B: 245, A: 255},
+		SubtleText:  color.NRGBA{R: 122, G: 162, B: 247, A: 255},
+		HoverCircle: color.NRGBA{R: 238, G: 117, B: 254, A: 40},
+		Variant:     theme.VariantDark,
+	},
+	"monokai": {
+		Background:  color.NRGBA{R: 45, G: 42, B: 46, A: 255},
+		Foreground:  color.NRGBA{R: 255, G: 216, B: 102, A: 255},
+		SubtleText:  color.NRGBA{R: 120, G: 220, B: 232, A: 255},
+		HoverCircle: color.NRGBA{R: 255, G: 97, B: 136, A: 40},
+		Variant:     theme.VariantDark,
+	},
 }
 
-// GetTheme returns the actual fyne.Theme implementation based on ThemeType
-func GetTheme(t ThemeType) fyne.Theme {
-	switch t {
-	case ThemeLight:
-		return NewAppTheme(theme.VariantLight)
-	case ThemeCyberpunk:
-		return &CyberpunkTheme{}
-	case ThemeSolarizedDark:
-		return &SolarizedDarkTheme{}
-	case ThemeSolarizedLight:
-		return &SolarizedLightTheme{}
-	case ThemeWarm:
-		return &WarmTheme{}
-	case ThemeDark:
-		fallthrough
-	default:
-		return NewAppTheme(theme.VariantDark)
+// ParseTheme converts string input directly into ThemeType with a fallback lookup
+func ParseTheme(input string) ThemeType {
+	t := ThemeType(input)
+	if _, exists := themeRegistry[t]; exists {
+		return t
 	}
+	return "dark"
+}
+
+// GetTheme resolves the theme directly from the map
+func GetTheme(t ThemeType) fyne.Theme {
+	if palette, exists := themeRegistry[t]; exists {
+		return NewBaseTheme(palette)
+	}
+	return NewBaseTheme(themeRegistry["dark"])
+}
+
+// Themes returns all available themes
+func Themes() []string {
+	names := make([]string, 0, len(themeRegistry))
+	for k := range themeRegistry {
+		names = append(names, string(k))
+	}
+	return names
 }
 
 type AppTheme struct {

@@ -8,6 +8,7 @@ import (
 	"time"
 	"yell/internal/assets"
 	"yell/internal/ui"
+	"yell/internal/ui/themes"
 
 	"github.com/ebitengine/oto/v3"
 	"github.com/hajimehoshi/ebiten/v2/audio/wav"
@@ -106,7 +107,11 @@ func main() {
 		Use:   "themes",
 		Short: "List all available UI themes",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Available themes:\n- light\n- dark\n- warm\n-solarized-light\n-solarized-dark")
+			fmt.Printf("Available themes:\n\n")
+			thms := themes.Themes()
+			for _, theme := range thms {
+				fmt.Printf("- %s\n", theme)
+			}
 		},
 	}
 
