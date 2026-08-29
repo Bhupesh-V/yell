@@ -107,7 +107,6 @@ func main() {
 		Use:   "themes",
 		Short: "List all available UI themes",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("Available themes:\n\n")
 			thms := themes.Themes()
 			for _, theme := range thms {
 				fmt.Printf("- %s\n", theme)
@@ -120,7 +119,6 @@ func main() {
 		Use:   "sounds",
 		Short: "List all available alert sounds",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("Available sounds:\n\n")
 			sounds, err := assets.GetSoundNames()
 			if err != nil {
 				panic(err)

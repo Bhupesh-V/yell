@@ -2,6 +2,7 @@ package themes
 
 import (
 	"image/color"
+	"sort"
 	"yell/internal/ui/utils"
 
 	"fyne.io/fyne/v2"
@@ -101,6 +102,86 @@ var themeRegistry = map[ThemeType]Palette{
 		HoverCircle: color.NRGBA{R: 255, G: 97, B: 136, A: 40},
 		Variant:     theme.VariantDark,
 	},
+	// Gruvbox Dark (Warm Retro)
+	"gruvbox": {
+		Background:  color.NRGBA{R: 40, G: 40, B: 40, A: 255},    // Dark medium gray
+		Foreground:  color.NRGBA{R: 251, G: 241, B: 199, A: 255}, // Cream / Pale yellow
+		SubtleText:  color.NRGBA{R: 254, G: 128, B: 25, A: 255},  // Warm orange accent
+		HoverCircle: color.NRGBA{R: 251, G: 241, B: 199, A: 30},
+		Variant:     theme.VariantDark,
+	},
+
+	// Matrix / Hacker Green (Monochrome Terminal)
+	"matrix": {
+		Background:  color.NRGBA{R: 10, G: 15, B: 10, A: 255}, // Ultra-dark green tint
+		Foreground:  color.NRGBA{R: 0, G: 255, B: 65, A: 255}, // Bright terminal green
+		SubtleText:  color.NRGBA{R: 0, G: 143, B: 17, A: 255}, // Dimmed phosphor green
+		HoverCircle: color.NRGBA{R: 0, G: 255, B: 65, A: 35},
+		Variant:     theme.VariantDark,
+	},
+
+	// Synthwave '84 (High-contrast Neon Dark)
+	"synthwave": {
+		Background:  color.NRGBA{R: 38, G: 20, B: 51, A: 255},    // Deep purple night
+		Foreground:  color.NRGBA{R: 255, G: 222, B: 89, A: 255},  // Neon yellow title
+		SubtleText:  color.NRGBA{R: 255, G: 126, B: 219, A: 255}, // Hot pink text
+		HoverCircle: color.NRGBA{R: 54, G: 241, B: 205, A: 40},   // Cyan hover
+		Variant:     theme.VariantDark,
+	},
+
+	// OLED Black (True Pitch Black for AMOLED Displays)
+	"oled-black": {
+		Background:  color.NRGBA{R: 0, G: 0, B: 0, A: 255},       // Pitch black
+		Foreground:  color.NRGBA{R: 255, G: 255, B: 255, A: 255}, // Sharp white
+		SubtleText:  color.NRGBA{R: 160, G: 160, B: 160, A: 255}, // Neutral gray
+		HoverCircle: color.NRGBA{R: 255, G: 255, B: 255, A: 40},
+		Variant:     theme.VariantDark,
+	},
+
+	// Coffee / Espresso (Rich Dark Browns & Caramel)
+	"espresso": {
+		Background:  color.NRGBA{R: 30, G: 20, B: 18, A: 255},    // Dark roasted coffee bean
+		Foreground:  color.NRGBA{R: 240, G: 220, B: 200, A: 255}, // Cream / Foam text
+		SubtleText:  color.NRGBA{R: 210, G: 150, B: 90, A: 255},  // Warm caramel accent
+		HoverCircle: color.NRGBA{R: 240, G: 220, B: 200, A: 30},
+		Variant:     theme.VariantDark,
+	},
+
+	// Sunset / Vaporwave (Coral, Soft Gold, and Deep Plum)
+	"sunset": {
+		Background:  color.NRGBA{R: 45, G: 20, B: 44, A: 255},  // Deep plum sky
+		Foreground:  color.NRGBA{R: 255, G: 183, B: 3, A: 255}, // Sun gold title text
+		SubtleText:  color.NRGBA{R: 251, G: 133, B: 0, A: 255}, // Warm coral secondary text
+		HoverCircle: color.NRGBA{R: 255, G: 183, B: 3, A: 35},
+		Variant:     theme.VariantDark,
+	},
+
+	// Cyberpunk Gold / 2077 (High-Contrast Yellow & Slate)
+	"cyberpunk-2077": {
+		Background:  color.NRGBA{R: 20, G: 20, B: 20, A: 255},  // Near-black dark slate
+		Foreground:  color.NRGBA{R: 243, G: 230, B: 0, A: 255}, // Signature Cyberpunk yellow
+		SubtleText:  color.NRGBA{R: 0, G: 220, B: 255, A: 255}, // Bright electric cyan text
+		HoverCircle: color.NRGBA{R: 243, G: 230, B: 0, A: 45},
+		Variant:     theme.VariantDark,
+	},
+
+	// Everforest (Soft Comforting Warm Dark Green)
+	"everforest": {
+		Background:  color.NRGBA{R: 43, G: 51, B: 57, A: 255},    // Muted dark gray-green
+		Foreground:  color.NRGBA{R: 211, G: 198, B: 170, A: 255}, // Soft warm beige text
+		SubtleText:  color.NRGBA{R: 167, G: 192, B: 128, A: 255}, // Soft olive green text
+		HoverCircle: color.NRGBA{R: 211, G: 198, B: 170, A: 30},
+		Variant:     theme.VariantDark,
+	},
+
+	// Classic Paper / Sepia (Soft Warm Light Theme)
+	"sepia": {
+		Background:  color.NRGBA{R: 244, G: 236, B: 216, A: 255}, // Aged paper background
+		Foreground:  color.NRGBA{R: 67, G: 52, B: 34, A: 255},    // Dark ink brown text
+		SubtleText:  color.NRGBA{R: 140, G: 110, B: 80, A: 255},  // Medium brown secondary text
+		HoverCircle: color.NRGBA{R: 67, G: 52, B: 34, A: 25},
+		Variant:     theme.VariantLight,
+	},
 }
 
 // ParseTheme converts string input directly into ThemeType with a fallback lookup
@@ -126,6 +207,7 @@ func Themes() []string {
 	for k := range themeRegistry {
 		names = append(names, string(k))
 	}
+	sort.Strings(names)
 	return names
 }
 
