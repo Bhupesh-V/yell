@@ -174,6 +174,15 @@ var themeRegistry = map[ThemeType]Palette{
 		Variant:     theme.VariantDark,
 	},
 
+	// Pure White (Minimal, High-Contrast Light Theme)
+	"white": {
+		Background:  color.NRGBA{R: 255, G: 255, B: 255, A: 255}, // Pure white
+		Foreground:  color.NRGBA{R: 20, G: 20, B: 20, A: 255},    // Near-black text
+		SubtleText:  color.NRGBA{R: 110, G: 110, B: 110, A: 255}, // Neutral gray secondary text
+		HoverCircle: color.NRGBA{R: 0, G: 0, B: 0, A: 25},
+		Variant:     theme.VariantLight,
+	},
+
 	// Classic Paper / Sepia (Soft Warm Light Theme)
 	"sepia": {
 		Background:  color.NRGBA{R: 244, G: 236, B: 216, A: 255}, // Aged paper background
