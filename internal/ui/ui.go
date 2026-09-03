@@ -31,7 +31,10 @@ func Build(title, message, icon, appTheme *string) {
 
 		// Emoji Icon
 		emojiObject := utils.GetEmbeddedEmojiImage(*icon, 42)
-		iconContainer := container.NewCenter(emojiObject)
+		// Top-align (not NewCenter) so the icon shares the same top anchor as
+		// the title/message text instead of centering into tall message
+		// content (e.g. images).
+		iconContainer := container.NewVBox(emojiObject)
 
 		// Elements specify semantic ColorNames instead of explicit RGB colors
 		titleLabel := widget.NewRichText(
@@ -45,7 +48,7 @@ func Build(title, message, icon, appTheme *string) {
 			},
 		)
 
-		messageLabel := components.NewSelectableMarkdown(*message)
+		messageLabel := components.NewMarkdownMessage(*message)
 
 		// Group text with tight 2px vertical spacing
 		textGroup := container.New(&utils.TightVBoxLayout{Spacing: 2},
@@ -66,14 +69,20 @@ func Build(title, message, icon, appTheme *string) {
 
 		rightSide := container.NewHBox(
 			utils.Spacer(20, 0),
-			container.NewCenter(closeBtn),
+			// Top-align so the close button stays pinned to the
+			// title row instead of drifting into tall message content (e.g. images).
+			container.NewVBox(closeBtn),
 		)
 
 		toastLayout := container.NewBorder(
 			nil, nil,
 			leftSide,
 			rightSide,
-			container.NewCenter(textGroup),
+			// Make textGroup get the full available
+			// width instead of shrinking to its own MinSize - otherwise the
+			// message RichText has no room to actually center block content
+			// like images.
+			container.NewStack(textGroup),
 		)
 
 		paddedContainer := container.NewBorder(
