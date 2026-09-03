@@ -51,6 +51,15 @@ yell --title="Deploy Complete" --message=$'**Build #142** finished in `2m 34s`\n
 
 > <img width="456" height="229" alt="Screenshot 2026-08-26 at 12 53 44 AM" src="https://github.com/user-attachments/assets/4837e556-e10c-4229-aaf2-8a26535ebd2b" />
 
+Markdown also supports JPEG images, featuring an OG Sketch by yours truly
+
+```sh
+echo 'Go to bed ![horse-dog-snuggies.jpg](https://lh3.googleusercontent.com/d/1U5UcySisWg_PoUbM5PeTGZaQaL21tllW)' | yell --title="Sleepyy Time!" --icon="💤" --theme=white
+```
+
+> <img width="460" height="360" alt="Screenshot 2026-09-03 at 8 22 41 PM" src="https://github.com/user-attachments/assets/ff32c0c1-6d0f-4f62-a489-05520eacbc28" />
+
+
 
 Play a background sound, find yours via `yell list sounds`
 
