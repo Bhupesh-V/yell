@@ -82,7 +82,9 @@ func Build(title, message, icon, appTheme *string) {
 			toastLayout,
 		)
 
-		myWindow.SetContent(paddedContainer)
+		draggableContent := components.NewDraggableContainer(paddedContainer, myWindow)
+
+		myWindow.SetContent(draggableContent)
 		myWindow.CenterOnScreen()
 		myWindow.Show() // Use Show() instead of ShowAndRun() when inside fyne.Do
 	})
